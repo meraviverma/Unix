@@ -1,0 +1,77 @@
+printenv: to print environment variable setup in unix
+							------------------------------------------------------------------------------------
+																	AWK
+							------------------------------------------------------------------------------------
+1)awk '{print $1}' input_file
+
+//Here $1,$2,$3 represent first,second and third column in a row.
+
+ls -lrt | awk '{print $9}'
+
+				------------------------------------------------------------------------------------
+											DU(Disk Usage)
+				------------------------------------------------------------------------------------
+The Linux “du” (Disk Usage) is a standard Unix/Linux command, used to check the information of disk usage of files and directories on a machine. 
+
+To find out the disk usage summary of a /home/tecmint directory tree and each of its sub directories. 
+
+du -h /home/ravi
+//check disk usage in human readable format
+
+To get the summary of a grand total disk usage size of an directory use the option “-s” as follows.
+
+du -sh /home/ravi
+
+du -sh /home/ravi/*
+				------------------------------------------------------------------------------------
+												IFS
+				------------------------------------------------------------------------------------
+IFS stands for internal file separator.
+
+The Internal Field Separator (IFS) that is used for word splitting after expansion and to split lines into words with the read builtin command.
+The default value is <space><tab><newline>. You can print it with the following command:
+
+Create a text file called /tmp/domains.txt as follows:
+
+cyberciti.biz|202.54.1.1|/home/httpd|ftpcbzuser
+nixcraft.com|202.54.1.2|/home/httpd|ftpnixuser
+
+#!/bin/bash
+# setupapachevhost.sh - Apache webhosting automation demo script
+file=/tmp/domains.txt
+
+# set the Internal Field Separator to |
+IFS='|'
+while read -r domain ip webroot ftpusername
+do
+        printf "*** Adding %s to httpd.conf...\n" $domain
+        printf "Setting virtual host using %s ip...\n" $ip
+        printf "DocumentRoot is set to %s\n" $webroot
+        printf "Adding ftp access for %s using %s ftp account...\n\n" $domain $ftpusername
+	
+done < "$file"
+
+./setupapachevhost.sh
+
+Output
+-----------
+** Adding cyberciti.biz to httpd.conf...
+Setting virtual host using 202.54.1.1 ip...
+DocumentRoot is set to /home/httpd
+Adding ftp access for cyberciti.biz using ftpcbzuser ftp account...
+
+*** Adding nixcraft.com to httpd.conf...
+Setting virtual host using 202.54.1.2 ip...
+DocumentRoot is set to /home/httpd
+Adding ftp access for nixcraft.com using ftpnixuser ftp account...
+
+					---------------------------------------------------------------------------------------------
+									Q) Check if a file exists or not?
+					---------------------------------------------------------------------------------------------
+[! -d {file name}]
+
+$?
+The exit status of the last command executed.
+
+$$
+The process number of the current shell. For shell scripts, this is the process ID under which they are executing.
