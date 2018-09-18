@@ -1,7 +1,7 @@
 printenv: to print environment variable setup in unix
-							------------------------------------------------------------------------------------
-																	AWK
-							------------------------------------------------------------------------------------
+				-----------------------------------------------------------------
+																								AWK
+				----------------------------------------------------------------
 1)awk '{print $1}' input_file
 
 //Here $1,$2,$3 represent first,second and third column in a row.
@@ -9,7 +9,7 @@ printenv: to print environment variable setup in unix
 ls -lrt | awk '{print $9}'
 
 				------------------------------------------------------------------------------------
-											DU(Disk Usage)
+							DU(Disk Usage)
 				------------------------------------------------------------------------------------
 The Linux “du” (Disk Usage) is a standard Unix/Linux command, used to check the information of disk usage of files and directories on a machine. 
 
@@ -24,7 +24,7 @@ du -sh /home/ravi
 
 du -sh /home/ravi/*
 				------------------------------------------------------------------------------------
-												IFS
+								IFS
 				------------------------------------------------------------------------------------
 IFS stands for internal file separator.
 
@@ -65,9 +65,9 @@ Setting virtual host using 202.54.1.2 ip...
 DocumentRoot is set to /home/httpd
 Adding ftp access for nixcraft.com using ftpnixuser ftp account...
 
-					---------------------------------------------------------------------------------------------
-									Q) Check if a file exists or not?
-					---------------------------------------------------------------------------------------------
+			-----------------------------------------------------------------------------
+						Q) Check if a file exists or not?
+			----------------------------------------------------------------------------------
 [! -d {file name}]
 
 $?
