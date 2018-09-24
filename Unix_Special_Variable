@@ -1,0 +1,58 @@
+#!/bin/bash
+
+echo "Using \"\$*\":"
+for a in "$*"; do
+    echo $a;
+done
+
+echo -e "\nUsing \$*:"
+for a in $*; do
+    echo $a;
+done
+
+echo -e "\nUsing \"\$@\":"
+for a in "$@"; do
+    echo $a;
+done
+
+echo -e "\nUsing \$@:"
+for a in $@; do
+    echo $a;
+done
+
+echo -e "\nNO of argument=" $#  
+
+echo -e "\nUse of \"\$N\"= $1 $2 $3 $4"
+
+OUTPUT:|
+----------------------------------------------------------------------
+
+$ ./test.sh one two "three four" "five six"
+Using "$*":
+one two three four five six
+
+Using $*:
+one
+two
+three
+four
+five
+six
+
+Using "$@":
+one
+two
+three four
+five six
+
+Using $@:
+one
+two
+three
+four
+five
+six
+
+NO of argument= 4
+
+Use of "$N"= one two three four five six
