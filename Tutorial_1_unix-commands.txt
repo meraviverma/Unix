@@ -1,17 +1,227 @@
 printenv: to print environment variable setup in unix
-				-----------------------------------------------------------------
-																								AWK
-				----------------------------------------------------------------
+------------------------------------------------------------------------------------
+AWK
+------------------------------------------------------------------------------------
 1)awk '{print $1}' input_file
 
 //Here $1,$2,$3 represent first,second and third column in a row.
 
 ls -lrt | awk '{print $9}'
 
-				------------------------------------------------------------------------------------
-							DU(Disk Usage)
-				------------------------------------------------------------------------------------
-The Linux “du” (Disk Usage) is a standard Unix/Linux command, used to check the information of disk usage of files and directories on a machine. 
+------------------------------------------------------------------------------------
+Check space
+------------------------------------------------------------------------------------
+free -m
+
+------------------------------------------------------------------------------------
+Check Processor
+------------------------------------------------------------------------------------
+
+cat /proc/cpuinfo
+
+------------------------------------------------------------------------------------
+Difference between two file
+------------------------------------------------------------------------------------
+$ diff file1 file2
+
+Second: side-by-side diff
+
+$ diff -y file1 file2
+
+ome of the most useful diff options are these:
+-b	ignore white space differences
+-B	ignore blank lines
+-w	ignore all white space
+-i	ignore case differences
+-y	side-by-side
+
+Fifth: cmp
+
+The cmp command tells you if two files are different and where the first difference appears.
+Here's an example comparing text files:
+$ cmp file1 file2
+
+The diff3 command works a lot like diff, but allows you to compare three files instead of only two. However, this command doesn't 
+have all the options that the diff has and, no, there's no diff4, diff5, etc.
+
+$ diff3 file1 file2 file3
+
+
+------------------------------------------------------------------------------------
+SCP Command 
+------------------------------------------------------------------------------------
+SCP stands for secure copy is used to copy data (files or directories) from one unix or linux system to another unix or linux 
+server. SCP uses secured shell (ssh) to transfer the data between the remote hosts. 
+1)Copies files within in the same machine
+2)Copies files from local machine to remote machine.
+Copies files from remote machine to local machine.
+Copies files between two different remote servers.
+
+1. Copying with in the same system
+------------------------------------
+You can use the scp command just like the cp command to copy files from one directory to another directory. 
+scp Unix-storage.dat /var/tmp/
+
+2. Copy file from local host to remote server
+--------------------------------------------------
+This is most frequently used operation to transfer files in unix system. 
+
+scp filename user@remotehost:/remote/directory/
+
+3. Copy files from remote host to local server.
+--------------------------------------------------
+This operation is used when taking backup of the files in remote server.
+
+scp user@remotehost:/usr/backup/oracle_backup.dat .
+
+5. Copying a directory.
+--------------------------------------------------
+To copy all the files in a directory, use the -r option with the scp command. This makes the scp command to copy the directory recursively.
+
+scp -r directory user@remotehost:/var/tmp/
+
+
+------------------------------------------------------------------------------------
+SSH Command
+------------------------------------------------------------------------------------
+SSH client utility in unix or linux server is used to logging into a remote host and execute commands on the remote machine. 
+
+The rlogin and rsh commands can also be used to login into the remote machine. However these are not secure. The ssh command provides 
+a secure connection between two hosts over a insecure network.
+
+The syntax ssh command is
+
+ssh [-l username] hostname | user@remote-hostname [command]
+							
+------------------------------------------------------------------------------------
+FIND
+------------------------------------------------------------------------------------
+It is used to find the file in a particular directory.
+
+find -name *.dev
+
+find -name file1 | wc -l
+
+ou can specify the maximum depth of the search under the top-level search directory:
+
+find -maxdepth num -name query
+
+To find "file1" only in the "level1" directories and above, you can specify a max depth of 2 (1 for the top-level directory, 
+and 1 for the level1 directories):
+
+find -maxdepth 2 -name file1
+
+
+Size
+-------
+c: bytes
+k: Kilobytes
+M: Megabytes
+G: Gigabytes
+b: 512-byte blocks
+
+To find all files that are exactly 50 bytes, type:
+
+find / -size 50c
+
+To find all files less than 50 bytes, we can use this form instead:
+
+find / -size -50c
+
+To Find all files more than 700 Megabytes, we can use this command:
+
+find / -size +700M
+
+Time
+----------
+Linux stores time data about access times, modification times, and change times.
+
+Access Time: Last time a file was read or written to.
+Modification Time: Last time the contents of the file were modified.
+Change Time: Last time the file's inode meta-data was changed.
+
+We can use these with the "-atime", "-mtime", and "-ctime" parameters.
+
+To find files that have a modification time of a day ago, type:
+
+find / -mtime 1
+
+If we want files that were accessed in less than a day ago, we can type:
+
+find / -atime -1
+
+To get files that last had their meta information changed more than 3 days ago, type:
+
+find / -ctime +3
+
+There are also some companion parameters we can use to specify minutes instead of days:
+
+find / -mmin -1
+
+Finding by Owner and Permissions
+-----------------------------------
+You do this by using the "-user" and "-group" parameters respectively. Find a file that is owned by the "syslog" user by 
+entering:
+
+find / -user syslog
+Similarly, we can specify files owned by the "shadow" group by typing:
+
+find / -group shadow
+We can also search for files with specific permissions.
+
+
+If we want to match an exact set of permissions, we use this form:
+
+find / -perm 644
+
+------------------------------------------------------------------------------------
+Tr
+------------------------------------------------------------------------------------
+Trim the extra space.
+
+tr -d " "
+
+tr -d "-"
+------------------------------------------------------------------------------------
+SWAP SPACE
+------------------------------------------------------------------------------------
+https://www.linuxhelp.com/to-clear-ram-memory-cache-buffer-swapspace-on-linux/
+
+Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the 
+RAM is full, inactive pages in memory are moved to the swap space. 
+While swap space can help machines with a small amount of RAM, it should not be considered a replacement for more RAM. Swap space 
+is located on hard drives, which have a slower access time than physical memory.
+
+Swap space in Linux is used when the amount of physical memory (RAM) is full. If the system needs more memory resources and the RAM 
+is full, inactive pages in memory are moved to the swap space. 
+
+free -h
+
+To Clear PageCache only
+
+sync  echo 1 >  /proc/sys/vm/drop_caches 
+
+To Clear dentries and inodes
+
+sync  echo 2 >  /proc/sys/vm/drop_caches 
+
+To Clear PageCache, dentries and inodes
+
+sync  echo 3 >  /proc/sys/vm/drop_caches 
+
+To Clear Swap Space in Linux
+
+[root@linuxhelp ~]# swapoff -a
+[root@linuxhelp ~]# swapon -a
+[root@linuxhelp ~]# free -h
+
+
+
+------------------------------------------------------------------------------------
+DU(Disk Usage)
+------------------------------------------------------------------------------------
+The Linux “du” (Disk Usage) is a standard Unix/Linux command, used to check the information of disk usage of files and directories 
+on a machine. 
 
 To find out the disk usage summary of a /home/tecmint directory tree and each of its sub directories. 
 
@@ -23,12 +233,13 @@ To get the summary of a grand total disk usage size of an directory use the opti
 du -sh /home/ravi
 
 du -sh /home/ravi/*
-				------------------------------------------------------------------------------------
-								IFS
-				------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+IFS
+------------------------------------------------------------------------------------
 IFS stands for internal file separator.
 
-The Internal Field Separator (IFS) that is used for word splitting after expansion and to split lines into words with the read builtin command.
+The Internal Field Separator (IFS) that is used for word splitting after expansion and to split lines into words with the read 
+builtin command.
 The default value is <space><tab><newline>. You can print it with the following command:
 
 Create a text file called /tmp/domains.txt as follows:
@@ -65,9 +276,9 @@ Setting virtual host using 202.54.1.2 ip...
 DocumentRoot is set to /home/httpd
 Adding ftp access for nixcraft.com using ftpnixuser ftp account...
 
-			-----------------------------------------------------------------------------
-						Q) Check if a file exists or not?
-			----------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+Q) Check if a file exists or not?
+---------------------------------------------------------------------------------------------
 [! -d {file name}]
 
 $?
@@ -75,3 +286,102 @@ The exit status of the last command executed.
 
 $$
 The process number of the current shell. For shell scripts, this is the process ID under which they are executing.
+
+---------------------------------------------------------------------------------------------
+CRON JOB (crontab -e)
+---------------------------------------------------------------------------------------------
+* * * * * command to be executed
+- - - - -
+| | | | |
+| | | | ----- Day of week (0 - 7) (Sunday=0 or 7)
+| | | ------- Month (1 - 12)
+| | --------- Day of month (1 - 31)
+| ----------- Hour (0 - 23)
+------------- Minute (0 - 59)
+
+An operator allows you to specifying multiple values in a field. There are three operators:
+---------------------------------------------------------------------------------------------
+
+The asterisk (*) : This operator specifies all possible values for a field. For example, an asterisk in the hour time field would 
+be equivalent to every hour or an asterisk in the month field would be equivalent to every month.
+
+The comma (,) : This operator specifies a list of values, for example: “1,5,10,15,20,25”.
+
+The dash (-) : This operator specifies a range of values, for example: “5-15” days , which is equivalent to 
+typing “5,6,7,8,9,….,13,14,15” using the comma operator.
+
+The separator (/) : This operator specifies a step value, for example: “0-23/” can be used in the hours field to specify 
+command execution every other hour. Steps are also permitted after an asterisk, so if you want to say every two hours, 
+just use */2.
+
+To run /path/to/command five minutes after midnight, every day, enter:
+5 0 * * * /path/to/command
+
+Run /path/to/script.sh at 2:15pm on the first of every month, enter:
+15 14 1 * * /path/to/script.sh
+
+Run /scripts/phpscript.php at 10 pm on weekdays, enter:
+0 22 * * 1-5 /scripts/phpscript.php
+
+Run /root/scripts/perl/perlscript.pl at 23 minutes after midnight, 2am, 4am …, everyday, enter:
+23 0-23/2 * * * /root/scripts/perl/perlscript.pl
+
+Run /path/to/unixcommand at 5 after 4 every Sunday, enter:
+5 4 * * sun /path/to/unixcommand
+
+Special string			Meaning
+@reboot					Run once, at startup.
+@yearly					Run once a year, “0 0 1 1 *”.
+@annually				(same as @yearly)
+@monthly				Run once a month, “0 0 1 * *”.
+@weekly					Run once a week, “0 0 * * 0”.
+@daily					Run once a day, “0 0 * * *”.
+@midnight				(same as @daily)
+@hourly					Run once an hour, “0 * * * *”.
+
+Run the shell script /home/melissa/backup.sh on January 2 at 6:15 A.M:
+
+15 6 2 1 * /home/melissa/backup.sh
+
+For instance, the next example runs the same script as above, at 12:01 AM, every Monday in January:
+
+01 00 * Jan Monday /home/melissa/backup.sh
+
+Run /home/carl/hourly-archive.sh every hour, on the hour, from 9 A.M. (09:00) through 6 P.M. (18:00), every day:
+
+00 09-18 * * * /home/carl/hourly-archive.sh
+
+Run /home/wendy/script.sh every Monday, at 9 A.M. and 6 P.M:
+
+0 9,18 * * Mon /home/wendy/script.sh
+
+Run /usr/local/bin/backup at 10:30 P.M., every weekday:
+
+30 22 * * Mon,Tue,Wed,Thu,Fri /usr/local/bin/backup
+
+e.g.
+01 * * * * root echo "This command is run at one min past every hour"
+17 8 * * * root echo "This command is run daily at 8:17 am"
+17 20 * * * root echo "This command is run daily at 8:17 pm"
+00 4 * * 0 root echo "This command is run at 4 am every Sunday"
+* 4 * * Sun root echo "So is this"
+42 4 1 * * root echo "This command is run 4:42 am every 1st of the month"
+01 * 19 07 * root echo "This command is run hourly on the 19th of July"
+
+59 11 * * 1,2,3,4,5 root backup.sh
+Will run backup.sh at 11:59 Monday, Tuesday, Wednesday, Thursday and Friday,
+as will:
+59 11 * * 1-5 root backup.sh 
+
+A value of */2 in the dom field would mean the command runs every two days
+and likewise, */5 in the hours field would mean the command runs every 
+5 hours.
+e.g. 
+* 12 10-16/2 * * root backup.sh
+is the same as:
+* 12 10,12,14,16 * * root backup.sh
+
+*/15 9-17 * * * root connection.test
+Will run connection.test every 15 mins between the hours or 9am and 5pm
+
+9 - 1104
