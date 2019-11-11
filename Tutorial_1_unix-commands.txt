@@ -215,7 +215,57 @@ To Clear Swap Space in Linux
 [root@linuxhelp ~]# swapon -a
 [root@linuxhelp ~]# free -h
 
+------------------------------------------------------------------------------------
+sar(System Activity Report)
+------------------------------------------------------------------------------------
+It can be used to monitor Linux system’s resources like CPU usage, Memory utilization, 
+I/O devices consumption, Network monitoring, Disk usage, process and thread allocation, 
+battery performance, Plug and play devices, Processor performance, file system and more.
 
+By default SAR command displays result on the output screen, 
+in addition result can also be stored in the file specified by the -o filename option.
+
+Examples :
+1) To see help
+
+sar -h
+
+2)To verify the sar version :
+
+sar -V
+
+3)To report CPU details total 5 times with the interval of 2 seconds. 
+If the interval command is set to zero, average statistics from the 
+time system started are presented. If the count is not provided and 
+the interval is given, statistics are provided continuously after every interval.
+
+sar -u 2 5 
+
+4)To report about amount of memory used, amount of memory free, 
+available cache, available buffers total 3 times with the interval of 1 second.
+
+sar -r 1 3
+
+5)To report about file systems mounted on the device total 5 times 
+with the interval of 2 seconds.
+
+sar -F 2 5
+
+6)To report about block devices details total 3 times with the interval of 1 second.
+
+sar -d 1 3
+
+7)To report run queue length, number of processes and load average
+
+sar -q 2 5
+
+8)To report cpu usage for given core 
+
+sar -P 1 1 3
+
+9) Swap space utilization statistics
+
+sar -S
 
 ------------------------------------------------------------------------------------
 DU(Disk Usage)
